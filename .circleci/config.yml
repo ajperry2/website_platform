@@ -2,9 +2,9 @@ version: 2
 jobs:
   deploy:
     working_dir: ~/python-ci
-    docker: 
+    docker:
       - image: circleci/python:3.6.1
-    steps: 
+    steps:
       - checkout
       - restore_cache:
           keys:
@@ -20,15 +20,20 @@ jobs:
             curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
             sudo apt-get install -y nodejs
             node --version && npm -v
-      - run: 
+      - run:
           name: Install Serverless CLI and dependencies
-          command: | 
+          command: |
             sudo npm i -g serverless
             npm install
       - save_cache:
           paths:
             - node_modules
           key: dependencies-node-{{ checksum "package.json" }}
+          
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
       - run:
           name: Deploy application
           command: sls deploy -v
