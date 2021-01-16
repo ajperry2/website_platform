@@ -3,7 +3,7 @@ jobs:
   build:
     working_dir: ~/python-ci
     docker:
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.7.1
     steps:
       - checkout
       - restore_cache:
