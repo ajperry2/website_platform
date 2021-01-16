@@ -29,11 +29,6 @@ jobs:
           paths:
             - node_modules
           key: dependencies-node-{{ checksum "package.json" }}
-          
-# Orchestrate our job run sequence
-workflows:
-  build_and_test:
-    jobs:
       - run:
           name: Deploy application
           command: sls deploy -v
